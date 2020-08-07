@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activities.MainActivity"
+    android:paddingHorizontal="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/add_note_txtview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add new note"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:textColor="@color/textColorTitle"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/add_note_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/add_note_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Title"
+        android:maxLines="1"
+        android:inputType="text"
+        android:maxLength="30"
+        android:textColorHint="@color/textColorDetail"
+        android:textColor="@color/textColorTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_note_txtview_title"
+        app:layout_constraintBottom_toTopOf="@id/add_note_content" />
+    <EditText
+        android:id="@+id/add_note_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="start|top"
+        android:hint="Content"
+        android:inputType="textMultiLine"
+        android:textColor="@color/textColorTitle"
+        android:textColorHint="@color/textColorDetail"
+        app:layout_constraintBottom_toBottomOf="@id/add_note_h_guideline1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_note_title" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/add_note_v_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_note_save_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_note_v_guideline1"
+        app:layout_constraintTop_toTopOf="@id/add_note_h_guideline1"
+        app:srcCompat="@drawable/ic_close_24" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_note_close_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/add_note_v_guideline1"
+        app:layout_constraintTop_toTopOf="@id/add_note_h_guideline1"
+        app:srcCompat="@drawable/ic_check_24" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/add_note_h_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+</androidx.constraintlayout.widget.ConstraintLayout>
