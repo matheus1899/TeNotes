@@ -7,16 +7,18 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_note_reciclerview"
+        android:id="@+id/list_note_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="2"
-        tools:itemCount="10"
+        tools:itemCount="7"
         tools:listitem="@layout/item_list_note" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,4 +32,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_24" />
+
+    <TextView
+        android:id="@+id/list_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Without notes\n to show"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="?android:textAppearanceLarge"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
