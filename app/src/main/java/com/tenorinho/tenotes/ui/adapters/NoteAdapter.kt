@@ -6,18 +6,16 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.tenorinho.tenotes.R
-import com.tenorinho.tenotes.data.NoteRepository
 import com.tenorinho.tenotes.models.Note
 import com.tenorinho.tenotes.ui.INavigation
 
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>, View.OnCreateContextMenuListener{
-    var array:ArrayList<Note>? = null
+    var array:List<Note> = ArrayList<Note>()
     var activity:Activity
-    val isNull:Boolean = array == null
+
     var pos:Int = 0
-    constructor(act:Activity, list:ArrayList<Note>?):super(){
-        this.array = list
+    constructor(act:Activity):super(){
         this.activity = act
     }
 
@@ -37,31 +35,37 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>, View.OnCreateC
         return ViewHolder(view)
     }
     override fun getItemCount(): Int {
-        return array?.size ?: 0
+        return array.size
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = array?.get(position)
-        holder.root.setOnClickListener {
-            if(activity is INavigation){
-                val listener = activity as INavigation
-                listener.navigateToShowNoteFragment(note)
+        val note:Note? = array[position]
+        if(note != null){
+            holder.root.setOnClickListener {
+                if(activity is INavigation){
+                    val listener:INavigation = activity as INavigation
+                    listener.navigateToShowNoteFragment(note)
+                }
             }
-        }
-        holder.root.setOnLongClickListener {
-            pos = position
-            return@setOnLongClickListener false
-        }
-        holder.txtTitle.text = note?.title
-        with(note?.note){
-            if(this == null || this.isEmpty() || this.isBlank()){
-                holder.txtContent.visibility = View.GONE
+            holder.root.setOnLongClickListener {
+                pos = position
+                return@setOnLongClickListener false
             }
-            else{
-                holder.txtContent.visibility = View.VISIBLE
-                holder.txtContent.text = this
+            holder.txtTitle.text = note.title
+            with(note.note){
+                if(this.isEmpty() || this.isBlank()){
+                    holder.txtContent.visibility = View.GONE
+                }
+                else{
+                    holder.txtContent.visibility = View.VISIBLE
+                    holder.txtContent.text = this
+                }
             }
+            holder.txtContent.text = note.note
         }
-        holder.txtContent.text = note?.note
+    }
+    fun setNotes(notes:List<Note>){
+        this.array = notes
+        notifyDataSetChanged()
     }
     override fun onCreateContextMenu(menu: ContextMenu?, view: View?, info: ContextMenu.ContextMenuInfo?){
         menu?.add(Menu.NONE, R.id.edit_note, Menu.NONE, "Edit note")

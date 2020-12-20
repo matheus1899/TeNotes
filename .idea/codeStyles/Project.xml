@@ -1,6 +1,22 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <JetCodeStyleSettings>
+      <option name="SPACE_AFTER_TYPE_COLON" value="false" />
+      <option name="SPACE_BEFORE_EXTEND_COLON" value="false" />
+      <option name="SPACE_AFTER_EXTEND_COLON" value="false" />
+      <option name="INSERT_WHITESPACES_IN_SIMPLE_ONE_LINE_METHOD" value="false" />
+      <option name="SPACE_AROUND_FUNCTION_TYPE_ARROW" value="false" />
+      <option name="SPACE_BEFORE_LAMBDA_ARROW" value="false" />
+      <option name="SPACE_BEFORE_WHEN_PARENTHESES" value="false" />
+      <option name="NAME_COUNT_TO_USE_STAR_IMPORT" value="2" />
+      <option name="CONTINUATION_INDENT_IN_PARAMETER_LISTS" value="true" />
+      <option name="CONTINUATION_INDENT_IN_ARGUMENT_LISTS" value="true" />
+      <option name="CONTINUATION_INDENT_FOR_EXPRESSION_BODIES" value="true" />
+      <option name="CONTINUATION_INDENT_FOR_CHAINED_CALLS" value="true" />
+      <option name="CONTINUATION_INDENT_IN_SUPERTYPE_LISTS" value="true" />
+      <option name="CONTINUATION_INDENT_IN_IF_CONDITIONS" value="true" />
+      <option name="CONTINUATION_INDENT_IN_ELVIS" value="true" />
+      <option name="IF_RPAREN_ON_NEW_LINE" value="false" />
       <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
     </JetCodeStyleSettings>
     <codeStyleSettings language="XML">
@@ -117,6 +133,33 @@
     </codeStyleSettings>
     <codeStyleSettings language="kotlin">
       <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
+      <option name="KEEP_LINE_BREAKS" value="false" />
+      <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
+      <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="0" />
+      <option name="KEEP_BLANK_LINES_IN_CODE" value="0" />
+      <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
+      <option name="ELSE_ON_NEW_LINE" value="true" />
+      <option name="WHILE_ON_NEW_LINE" value="true" />
+      <option name="CATCH_ON_NEW_LINE" value="true" />
+      <option name="FINALLY_ON_NEW_LINE" value="true" />
+      <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+      <option name="SPACE_BEFORE_IF_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_FOR_PARENTHESES" value="false" />
+      <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false" />
+      <option name="CALL_PARAMETERS_WRAP" value="0" />
+      <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="false" />
+      <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="false" />
+      <option name="METHOD_PARAMETERS_WRAP" value="0" />
+      <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="false" />
+      <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="false" />
+      <option name="EXTENDS_LIST_WRAP" value="0" />
+      <option name="METHOD_CALL_CHAIN_WRAP" value="0" />
+      <option name="ASSIGNMENT_WRAP" value="0" />
+      <option name="METHOD_ANNOTATION_WRAP" value="1" />
+      <option name="CLASS_ANNOTATION_WRAP" value="1" />
+      <option name="FIELD_ANNOTATION_WRAP" value="1" />
+      <option name="WRAP_ON_TYPING" value="0" />
     </codeStyleSettings>
   </code_scheme>
 </component>

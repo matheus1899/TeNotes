@@ -1,77 +1,45 @@
 package com.tenorinho.tenotes.data
 
-import android.content.ContentValues
-import android.content.Context
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
+import android.app.Application
+import android.os.AsyncTask
+import androidx.lifecycle.LiveData
 import com.tenorinho.tenotes.models.Note
 
-class NoteRepository{
-    var helper:NoteSQLHelper
-    constructor(context:Context){
-        helper = NoteSQLHelper(context)
-    }
-    fun add(note:Note):Long{
-        val db:SQLiteDatabase = helper.writableDatabase
-        val cv = ContentValues()
-        cv.put(NoteSQLHelper.COLUMN_TITLE, note.title)
-        cv.put(NoteSQLHelper.COLUMN_CONTENT, note.note)
+class NoteRepository {
+    private var noteDao:NoteDAO
+    private var allNotes:LiveData<List<Note>>
 
-        val id:Long = db.insert(NoteSQLHelper.TABLE_NAME, null, cv)
-        if(id != -1.toLong()){
-            note.id = id
-        }
-        db.close()
-        return id
+    constructor(application:Application){
+        val database:NoteDatabase = NoteDatabaseAcessor.getInstance(application)
+        noteDao = database.getNoteDAO()
+        allNotes = noteDao.getAll()
     }
-    fun update(note:Note):Int{
-        val db:SQLiteDatabase = helper.writableDatabase
-        val cv = ContentValues()
-        cv.put(NoteSQLHelper.COLUMN_TITLE, note.title)
-        cv.put(NoteSQLHelper.COLUMN_CONTENT, note.note)
-
-        val lines = db.update(NoteSQLHelper.TABLE_NAME, cv, NoteSQLHelper.COLUMN_ID+" = ?", Array<String>(1){note.id.toString()})
-        db.close()
-        return lines
+    fun add(note:Note){
+        InsertNoteAsyncTask(noteDao).execute(note)
     }
-    fun delete(note: Note):Int{
-        val db:SQLiteDatabase = helper.writableDatabase
-        val lines = db.delete(NoteSQLHelper.TABLE_NAME,NoteSQLHelper.COLUMN_ID+" = ?", Array<String>(1){note.id.toString()})
-        db.close()
-        return lines
+    fun update(note:Note){
+        UpdateNoteAsyncTask(noteDao).execute(note)
     }
-    fun save(note:Note){
-        if(note.id == 0.toLong()){
-            add(note)
-        }
-        else{
-            update(note)
-        }
+    fun delete(note:Note){
+        DeleteNoteAsyncTask(noteDao).execute(note)
     }
-    fun getAll():ArrayList<Note>?{
-        val db:SQLiteDatabase = helper.writableDatabase
+    fun getAllNotes():LiveData<List<Note>>{
+        return allNotes
+    }
 
-        val sql = "SELECT * FROM ${NoteSQLHelper.TABLE_NAME} ORDER BY ${NoteSQLHelper.COLUMN_ID}"
-        val args = Array<String>(0) {""}
-        val cursor:Cursor? = db.rawQuery(sql, args)
-
-        val array = ArrayList<Note>()
-
-        if(cursor != null) {
-            while(cursor.moveToNext()) {
-                val id: Long = cursor.getLong(cursor.getColumnIndex(NoteSQLHelper.COLUMN_ID))
-                val title: String = cursor.getString(cursor.getColumnIndex(NoteSQLHelper.COLUMN_TITLE))
-                val content: String = cursor.getString(cursor.getColumnIndex(NoteSQLHelper.COLUMN_CONTENT))
-                array.add(Note(id, title, content))
-            }
-        }
-        else{
-            cursor?.close()
-            db.close()
-            return null
-        }
-        cursor.close()
-        db.close()
-        return array
+    private class InsertNoteAsyncTask:AsyncTask<Note, Unit, Unit>{
+        val noteDao:NoteDAO
+        constructor(noteDAO:NoteDAO){ this.noteDao = noteDAO }
+        override fun doInBackground(vararg note:Note?) { note[0]?.apply{noteDao.add(this)} }
+    }
+    private class UpdateNoteAsyncTask:AsyncTask<Note, Unit, Unit>{
+        val noteDao:NoteDAO
+        constructor(noteDAO:NoteDAO){ this.noteDao = noteDAO }
+        override fun doInBackground(vararg note:Note?) { note[0]?.apply{noteDao.update(this)} }
+    }
+    private class DeleteNoteAsyncTask:AsyncTask<Note, Unit, Unit>{
+        val noteDao:NoteDAO
+        constructor(noteDAO:NoteDAO){ this.noteDao = noteDAO }
+        override fun doInBackground(vararg note:Note?) { note[0]?.apply{noteDao.delete(this)} }
     }
 }

@@ -1,22 +1,23 @@
 package com.tenorinho.tenotes.ui.fragments
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.tenorinho.tenotes.*
 import com.tenorinho.tenotes.models.Note
-import com.tenorinho.tenotes.R
-import com.tenorinho.tenotes.data.NoteRepository
+import com.tenorinho.tenotes.data.*
 
 class FragmentEditNote: Fragment() {
-    var note: Note? = null
+    var note:Note? = null
     var editTitle:EditText? = null
     var editContent:EditText? = null
+    private var noteViewModel:NoteViewModel? = null
 
     companion object{
         fun create():FragmentEditNote{
@@ -32,11 +33,9 @@ class FragmentEditNote: Fragment() {
             val title:String = editTitle?.text.toString()
             val content:String = editContent?.text.toString()
 
-            note?.title = title
-            note?.note = content
-
-            val repo = NoteRepository(activity!!)
-            repo.update(note!!)
+            note!!.title = title
+            note!!.note = content
+            noteViewModel?.update(note!!)
             Toast.makeText(activity, "Editado com sucesso", Toast.LENGTH_SHORT).show()
             popAddFragment()
         }
@@ -49,6 +48,7 @@ class FragmentEditNote: Fragment() {
         super.onSaveInstanceState(outState)
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        noteViewModel = ViewModelProviders.of(activity!!).get(NoteViewModel::class.java)
         return inflater.inflate(R.layout.fragment_edit_note, container, false)
     }
     override fun onViewStateRestored(savedInstanceState: Bundle?) {

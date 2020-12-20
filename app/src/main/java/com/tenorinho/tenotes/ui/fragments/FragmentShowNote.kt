@@ -32,7 +32,18 @@ class FragmentShowNote: Fragment(){
     }
     override fun onStart() {
         super.onStart()
-        view?.findViewById<TextView>(R.id.show_note_title)?.text = note?.title
-        view?.findViewById<TextView>(R.id.show_note_content)?.text = note?.note
+        if(note != null){
+            view?.findViewById<TextView>(R.id.show_note_title)?.text = note!!.title
+            if(note!!.note.trimStart().trimEnd().isEmpty()){
+                view?.findViewById<TextView>(R.id.show_note_content)?.visibility = View.GONE
+            }
+            else{
+                view?.findViewById<TextView>(R.id.show_note_content)?.text = note!!.note
+            }
+        }
+        else{
+            view?.findViewById<TextView>(R.id.show_note_title)?.visibility = View.GONE
+            view?.findViewById<TextView>(R.id.show_note_content)?.visibility = View.GONE
+        }
     }
 }
