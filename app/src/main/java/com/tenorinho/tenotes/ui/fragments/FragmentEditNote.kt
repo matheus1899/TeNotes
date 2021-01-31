@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.tenorinho.tenotes.*
 import com.tenorinho.tenotes.models.Note
-import com.tenorinho.tenotes.data.*
 
 class FragmentEditNote: Fragment() {
     var note:Note? = null
@@ -34,7 +33,7 @@ class FragmentEditNote: Fragment() {
             val content:String = editContent?.text.toString()
 
             note!!.title = title
-            note!!.note = content
+            note!!.content = content
             noteViewModel?.update(note!!)
             Toast.makeText(activity, "Editado com sucesso", Toast.LENGTH_SHORT).show()
             popAddFragment()
@@ -67,7 +66,7 @@ class FragmentEditNote: Fragment() {
         editContent = view?.findViewById(R.id.edit_note_content)
 
         editTitle?.setText(note?.title)
-        editContent?.setText(note?.note)
+        editContent?.setText(note?.content)
         super.onStart()
     }
 }

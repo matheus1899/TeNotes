@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.*
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.tenorinho.tenotes.*
-import com.tenorinho.tenotes.data.*
 import com.tenorinho.tenotes.models.Note
 
 class FragmentAddNote:Fragment() {
     var edtTitle: EditText? = null
     var edtContent: EditText? = null
-    private var noteViewModel:NoteViewModel? = null
+    private val noteViewModel:NoteViewModel by lazy{
+        ViewModelProviders.of(activity!!).get(NoteViewModel::class.java)
+    }
     companion object{
         fun create():FragmentAddNote{
             return FragmentAddNote()
@@ -28,11 +29,10 @@ class FragmentAddNote:Fragment() {
         view.findViewById<FloatingActionButton>(R.id.add_note_save_fab).setOnClickListener{addNote()}
         edtTitle = view.findViewById(R.id.add_note_title)
         edtContent = view.findViewById(R.id.add_note_content)
-        noteViewModel = ViewModelProviders.of(activity!!).get(NoteViewModel::class.java)
         return view
     }
     private fun popAddFragment(){
-        val act = activity
+        val act:FragmentActivity? = activity
         act?.supportFragmentManager?.popBackStack()
     }
     private fun addNote(){
@@ -46,8 +46,8 @@ class FragmentAddNote:Fragment() {
             Toast.makeText(activity, "Título deve ter no máximo 40 caracteres", Toast.LENGTH_SHORT).show()
             return
         }
-        val note = Note(title=title, note = content)
-        noteViewModel?.add(note)
+        val note = Note(title=title, content = content)
+        noteViewModel.add(note)
         Toast.makeText(activity, "Adicionado com sucesso", Toast.LENGTH_SHORT).show()
         popAddFragment()
     }

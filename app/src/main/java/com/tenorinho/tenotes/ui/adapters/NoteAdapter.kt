@@ -51,7 +51,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>, View.OnCreateC
                 return@setOnLongClickListener false
             }
             holder.txtTitle.text = note.title
-            with(note.note){
+            with(note.content){
                 if(this.isEmpty() || this.isBlank()){
                     holder.txtContent.visibility = View.GONE
                 }
@@ -60,7 +60,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>, View.OnCreateC
                     holder.txtContent.text = this
                 }
             }
-            holder.txtContent.text = note.note
+            holder.txtContent.text = note.content
         }
     }
     fun setNotes(notes:List<Note>){
