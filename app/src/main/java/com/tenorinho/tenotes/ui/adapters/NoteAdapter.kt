@@ -6,9 +6,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.tenorinho.tenotes.R
+import com.tenorinho.tenotes.databinding.ItemListNoteBinding
 import com.tenorinho.tenotes.models.Note
 import com.tenorinho.tenotes.ui.INavigation
-
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>, View.OnCreateContextMenuListener{
     var array:List<Note> = ArrayList<Note>()
@@ -30,7 +30,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.ViewHolder>, View.OnCreateC
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list_note, parent, false)
+        val view:View = ItemListNoteBinding.inflate(LayoutInflater.from(parent.context)).root
         view.setOnCreateContextMenuListener(this)
         return ViewHolder(view)
     }

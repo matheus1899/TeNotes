@@ -14,37 +14,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.tenorinho.tenotes.*
 import com.tenorinho.tenotes.data.*
+import com.tenorinho.tenotes.databinding.FragmentListNotesBinding
 import com.tenorinho.tenotes.models.Note
 import com.tenorinho.tenotes.ui.INavigation
 import com.tenorinho.tenotes.ui.adapters.NoteAdapter
 
-class FragmentListNotes : Fragment(){
-    private val recyclerView:RecyclerView by lazy{ view!!.findViewById<RecyclerView>(R.id.list_note_recyclerview)}
+class FragmentListNotes : Fragment(R.layout.fragment_list_notes){
     private val noteViewModel:NoteViewModel by lazy {ViewModelProviders.of(activity!!).get(NoteViewModel::class.java)}
-
+    private var fragmentListNotesBinding:FragmentListNotesBinding? = null
     companion object{
         fun create():FragmentListNotes{
             return FragmentListNotes()
         }
     }
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_list_notes, parent, false)
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fragmentListNotesBinding = FragmentListNotesBinding.bind(view)
         val listener:INavigation = activity as INavigation
-
-        view.findViewById<FloatingActionButton>(R.id.list_note_fab)
-                .setOnClickListener{listener.navigateToAddNoteFragment()}
-
-        activity?.registerForContextMenu(recyclerView)
-
+        fragmentListNotesBinding?.listNoteFab?.setOnClickListener{listener.navigateToAddNoteFragment()}
+        activity?.registerForContextMenu(fragmentListNotesBinding?.listNoteRecyclerview)
         val adapter:NoteAdapter = getAdapter()
-
         noteViewModel.getAllNotes().observe(this, Observer<List<Note>> {
             adapter.setNotes(it)
         })
-        recyclerView.adapter = adapter
+        fragmentListNotesBinding?.listNoteRecyclerview?.adapter = adapter
     }
     private fun getAdapter():NoteAdapter{
         return NoteAdapter(activity!!)
@@ -52,13 +45,13 @@ class FragmentListNotes : Fragment(){
     fun openEdit(position: Int){
         val act:Activity? = activity
         if(act != null && act is INavigation){
-            val adapter:NoteAdapter = recyclerView.adapter as NoteAdapter
+            val adapter:NoteAdapter = fragmentListNotesBinding?.listNoteRecyclerview?.adapter as NoteAdapter
             val note:Note = adapter.array[position]
             act.navigateToEditNoteFragment(note)
         }
     }
     fun openDelete(position: Int){
-        val adapter:NoteAdapter = recyclerView.adapter as NoteAdapter
+        val adapter:NoteAdapter = fragmentListNotesBinding?.listNoteRecyclerview?.adapter as NoteAdapter
         val note:Note? = adapter.array[position]
         if(note != null){
             val dialog:AlertDialog.Builder = AlertDialog.Builder(activity!!).setTitle("Delete?").setMessage("Você tem certeza que deseja excluir?")

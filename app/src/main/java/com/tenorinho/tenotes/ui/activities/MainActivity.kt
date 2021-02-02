@@ -63,16 +63,13 @@ class MainActivity : AppCompatActivity(), INavigation {
         val transaction = supportFragmentManager.beginTransaction()
         val mainFragment: Fragment? = supportFragmentManager.findFragmentByTag(MAIN_FRAGMENT)
         if(mainFragment != null) {
-            val fragmentEditNote = FragmentEditNote.create()
-            fragmentEditNote.note = note
-            transaction.remove(mainFragment)
-                .replace(R.id.main_activity_frame, fragmentEditNote, EDIT_FRAGMENT)
+            val fragmentEditNote = FragmentEditNote.create(note)
+            transaction.replace(R.id.main_activity_frame, fragmentEditNote, EDIT_FRAGMENT)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .addToBackStack(EDIT_FRAGMENT).commit()
         }
         else{
-            val fragmentEditNote = FragmentEditNote.create()
-            fragmentEditNote.note = note
+            val fragmentEditNote = FragmentEditNote.create(note)
             transaction.add(R.id.main_activity_frame, fragmentEditNote, EDIT_FRAGMENT).commit()
         }
     }
